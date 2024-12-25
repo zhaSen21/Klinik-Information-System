@@ -9,6 +9,7 @@ import Main.KoneksiDatabase;
 import java.awt.HeadlessException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,38 +40,41 @@ public class form_resepsionis extends javax.swing.JFrame {
     public form_resepsionis() {
         initComponents();
     }
+
     public form_resepsionis(String nama) {
-        initComponents();      
+        initComponents();
         jLabel2.setText("Mr/Mrs " + nama);
         selectDataPasien();
         Tanggal tgl = new Tanggal();
         jLabel7.setText(tgl.getTanggal());
     }
-    public class Tanggal{       //mengambil tanggal untuk keperluan generate id
-        private String getTanggal() {          
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");          
-        Date date = new Date();          
-        return dateFormat.format(date);
-    }
-    }
-    public void cariDataPasien() throws SQLException{
-        scrollpane.show();        
-        if ("".equals(Cari.getText())){
-            JOptionPane.showMessageDialog(null,"Silahkan masukan No RM");
+
+    public class Tanggal {       //mengambil tanggal untuk keperluan generate id
+
+        private String getTanggal() {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            return dateFormat.format(date);
         }
-        else{
-            try{
+    }
+
+    public void cariDataPasien() throws SQLException {
+        scrollpane.show();
+        if ("".equals(Cari.getText())) {
+            JOptionPane.showMessageDialog(null, "Silahkan masukan No RM");
+        } else {
+            try {
                 int baris = 0;
                 String cari = Cari.getText();
-                Object header[]={"No RM","NIK","Nama","Tanggal Lahir","Jenis Kelamin(L/P)","Gol Darah","Pekerjaan","Alamat","Telepon"};//membuat nama kolom tabel
+                Object header[] = {"No RM", "NIK", "Nama", "Tanggal Lahir", "Jenis Kelamin(L/P)", "Gol Darah", "Pekerjaan", "Alamat", "Telepon"};//membuat nama kolom tabel
                 DefaultTableModel data = new DefaultTableModel(null, header);
                 tablePasien.setModel(data);
                 Connection kon = KoneksiDatabase.getConnection();
-                String cariData ="SELECT * FROM tb_pasien where nama_pasien ='"+cari+"'";//perintah sql untuk select sesuai dengan nama pasien
+                String cariData = "SELECT * FROM tb_pasien where nama_pasien ='" + cari + "'";//perintah sql untuk select sesuai dengan nama pasien
                 Statement st = kon.createStatement();
                 ResultSet rs = st.executeQuery(cariData);
-                    while(rs.next()){
-                    baris =rs.getRow();
+                while (rs.next()) {
+                    baris = rs.getRow();
                     String kolom1 = rs.getString(1);
                     String kolom2 = rs.getString(2);
                     String kolom3 = rs.getString(3);
@@ -82,29 +86,29 @@ public class form_resepsionis extends javax.swing.JFrame {
                     String kolom9 = rs.getString(9);
                     String kolom[] = {kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8, kolom9};
                     data.addRow(kolom); //menampilkan hasil dari perintah sql ke tabel
-                    }
-                    if (baris==0){
-                        JOptionPane.showMessageDialog(null,"Nama yang dimasukkan salah atau belum terdaftar");
-                        selectDataPasien();
-                    }                  
                 }
-            catch (SQLException ex){
-                JOptionPane.showMessageDialog(null,"Nama yang dimasukkan salah atau belum terdaftar");                
-        }        
+                if (baris == 0) {
+                    JOptionPane.showMessageDialog(null, "Nama yang dimasukkan salah atau belum terdaftar");
+                    selectDataPasien();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Nama yang dimasukkan salah atau belum terdaftar");
             }
-        }         
-    public void selectDataPasien(){
-        try{
+        }
+    }
+
+    public void selectDataPasien() {
+        try {
             scrollpane.show();
-            Object header[]={"NIK","Nama","Tanggal Lahir","Jenis Kelamin(L/P)","Gol Darah","Pekerjaan","Alamat","Telepon"};//membuat nama kolom dari tabel
+            Object header[] = {"NIK", "Nama", "Tanggal Lahir", "Jenis Kelamin(L/P)", "Gol Darah", "Pekerjaan", "Alamat", "Telepon"};//membuat nama kolom dari tabel
             DefaultTableModel data = new DefaultTableModel(null, header);
             tablePasien.setModel(data);
             Connection kon = KoneksiDatabase.getConnection();
-            String slct ="SELECT * FROM tb_pasien order by nama_pasien";//perintah sql untuk select semua record pada tb_pasien
-            try{
+            String slct = "SELECT * FROM tb_pasien order by nama_pasien";//perintah sql untuk select semua record pada tb_pasien
+            try {
                 Statement st = kon.createStatement();
                 ResultSet rs = st.executeQuery(slct);
-                while(rs.next()){
+                while (rs.next()) {
                     String kolom1 = rs.getString(1);
                     String kolom2 = rs.getString(2);
                     String kolom3 = rs.getString(3);
@@ -113,96 +117,93 @@ public class form_resepsionis extends javax.swing.JFrame {
                     String kolom6 = rs.getString(6);
                     String kolom7 = rs.getString(7);
                     String kolom8 = rs.getString(8);
-                    String kolom9 = rs.getString(9);
-                    String kolom[] = {kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8, kolom9};
+                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8};
                     data.addRow(kolom);//menambahkan hasil perintah sql kedalam tabel
-                }}
-            catch (SQLException e){
-                JOptionPane.showMessageDialog(null,"error :"+e.getMessage());
-            }       
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE, null, ex);
         }
-            catch (SQLException ex){
-                Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE,null, ex);
-        }       
     }
-    public void selectAntrian() throws SQLException{
-        try{
+
+    public void selectAntrian() throws SQLException {
+        try {
             scrollpane.show();
-            Object header[]={"No Antrian","NIK","Nama","Tanggal","Keluhan"};
+            Object header[] = {"No Antrian", "NIK", "Nama", "Tanggal", "Keluhan"};
             DefaultTableModel data = new DefaultTableModel(null, header);
             tablePasien.setModel(data);
             Connection kon = KoneksiDatabase.getConnection();
-            String slct ="SELECT * FROM tb_antrian";
-             try{
+            String slct = "SELECT * FROM tb_antrian";
+            try {
                 Statement st = kon.createStatement();
                 ResultSet rs = st.executeQuery(slct);
-                while(rs.next()){
+                while (rs.next()) {
                     String kolom1 = rs.getString(1);
                     String kolom2 = rs.getString(2);
                     String kolom3 = rs.getString(3);
                     String kolom4 = rs.getString(4);
                     String kolom5 = rs.getString(5);
-                    String kolom[] ={kolom1, kolom2, kolom3, kolom4, kolom5};
+                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5};
                     data.addRow(kolom);
                 }
-        }
-             catch (SQLException e){
-                JOptionPane.showMessageDialog(null,"error :"+e.getMessage());
-    }
-        }
-        catch (SQLException ex){
-                Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE,null, ex);
-        }
-    }
-    public void deleteData(){
-        int row = tablePasien.getSelectedRow();        
-        if (row==-1){
-                JOptionPane.showMessageDialog(this,"Silahkan pilih record yang akan di hapus");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
             }
-        else{
-        int Pilih = JOptionPane.showConfirmDialog(null,"Anda yakin ingin menghapus record ini?" ,"DELETE",JOptionPane.YES_NO_OPTION);
-        if(Pilih == JOptionPane.YES_OPTION){
-        if (pilihTable.getSelectedItem()=="Pasien"){
-         try {
-            Connection kon = KoneksiDatabase.getConnection();  
-                 try{
-                    Statement st = kon.createStatement();
-                    String hapus = "Delete from tb_pasien where no_rm='"+tablePasien.getValueAt(row, 0).toString()+"'";
-                    st.executeUpdate(hapus);
-                    JOptionPane.showMessageDialog(this,"Record berhasil dihapus");
-                    selectDataPasien();       
-                }
-                catch (HeadlessException | SQLException e){
-                    JOptionPane.showMessageDialog(null,"error : "+e.getMessage());
-                }                  
-         }
-            catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE, null, ex);
-                    }
         }
-        else{
-            try {
-            Connection kon = KoneksiDatabase.getConnection();
-                 try{                   
-                    Statement st = kon.createStatement();
-                    String hapus = "Delete from tb_antrian where no_rm='"+tablePasien.getValueAt(row, 1).toString()+"'";
-                    st.executeUpdate(hapus);
-                    JOptionPane.showMessageDialog(this,"Record berhasil dihapus");
-                    selectAntrian();         
-                }
-                catch (HeadlessException | SQLException e){
-                    JOptionPane.showMessageDialog(null,"error : "+e.getMessage());
-                }                  
-         }
-            catch (SQLException ex) {
-            Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-        }
-        }
-        else if(Pilih == JOptionPane.NO_OPTION)
-            JOptionPane.showMessageDialog(null, "OK");         
-            }              
     }
+
+    public void deleteData() {
+        int row = tablePasien.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih record yang akan di hapus");
+        } else {
+            int Pilih = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus record ini?", "DELETE", JOptionPane.YES_NO_OPTION);
+            if (Pilih == JOptionPane.YES_OPTION) {
+                if (pilihTable.getSelectedItem().equals("Pasien")) {
+                    try {
+                        // Menggunakan koneksi yang sudah ada
+                        Connection kon = KoneksiDatabase.getConnection();
+                        String hapus = "DELETE FROM tb_pasien WHERE no_rm = ?";
+                        PreparedStatement pst = kon.prepareStatement(hapus);
+
+                        // Ambil nilai `no_rm` dari tabel
+                        pst.setLong(1, Long.parseLong(tablePasien.getValueAt(row, 0).toString()));
+
+                        // Eksekusi query
+                        pst.executeUpdate();
+                        JOptionPane.showMessageDialog(this, "Record berhasil dihapus");
+
+                        // Refresh data tabel pasien
+                        selectDataPasien();
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        Connection kon = KoneksiDatabase.getConnection();
+                        try {
+                            Statement st = kon.createStatement();
+                            String hapus = "Delete from tb_antrian where no_rm='" + tablePasien.getValueAt(row, 1).toString() + "'";
+                            st.executeUpdate(hapus);
+                            JOptionPane.showMessageDialog(this, "Record berhasil dihapus");
+                            selectAntrian();
+                        } catch (HeadlessException | SQLException e) {
+                            JOptionPane.showMessageDialog(null, "error : " + e.getMessage());
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } else if (Pilih == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "OK");
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -537,22 +538,21 @@ public class form_resepsionis extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void pilihTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihTableActionPerformed
-        if (pilihTable.getSelectedItem()== "Pasien"){
+        if (pilihTable.getSelectedItem() == "Pasien") {
             selectDataPasien();
-        Cari.setVisible(true);
-        btn_cari.setVisible(true);
-        jLabel4.setVisible(true);
-        jLabel5.setVisible(true);
-        btn_input.setVisible(true);
-        btn_cetak.setVisible(true);
-        }
-        else{
-        Cari.setVisible(false);
-        btn_cari.setVisible(false);
-        jLabel4.setVisible(false);
-        jLabel5.setVisible(false);
-        btn_input.setVisible(false);
-        btn_cetak.setVisible(false);    
+            Cari.setVisible(true);
+            btn_cari.setVisible(true);
+            jLabel4.setVisible(true);
+            jLabel5.setVisible(true);
+            btn_input.setVisible(true);
+            btn_cetak.setVisible(true);
+        } else {
+            Cari.setVisible(false);
+            btn_cari.setVisible(false);
+            jLabel4.setVisible(false);
+            jLabel5.setVisible(false);
+            btn_input.setVisible(false);
+            btn_cetak.setVisible(false);
             try {
                 selectAntrian();
             } catch (SQLException ex) {
@@ -567,28 +567,28 @@ public class form_resepsionis extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inputActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        deleteData();       
+        deleteData();
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void tablePasienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePasienMouseClicked
-       if (pilihTable.getSelectedItem()=="Pasien"){
-        int row = tablePasien.getSelectedRow();
-        String no_rm, nama, jk, gol, alamat, telepon;
-        if (row !=-1){ 
-            no_rm = tablePasien.getValueAt(row, 0).toString();
-            nama = tablePasien.getValueAt(row, 1).toString();
-            jk = tablePasien.getValueAt(row, 3).toString();
-            gol = tablePasien.getValueAt(row, 4).toString();            
-            alamat = tablePasien.getValueAt(row, 6).toString();
-            telepon = tablePasien.getValueAt(row, 7).toString();
-            form_pasien fp = new form_pasien(no_rm, nama, jk, gol, alamat, telepon);
-            fp.show();
+        if (pilihTable.getSelectedItem() == "Pasien") {
+            int row = tablePasien.getSelectedRow();
+            String no_rm, nama, jk, gol, alamat, telepon;
+            if (row != -1) {
+                no_rm = tablePasien.getValueAt(row, 0).toString();
+                nama = tablePasien.getValueAt(row, 1).toString();
+                jk = tablePasien.getValueAt(row, 3).toString();
+                gol = tablePasien.getValueAt(row, 4).toString();
+                alamat = tablePasien.getValueAt(row, 6).toString();
+                telepon = tablePasien.getValueAt(row, 7).toString();
+                form_pasien fp = new form_pasien(no_rm, nama, jk, gol, alamat, telepon);
+                fp.show();
+            }
         }
-        }          
     }//GEN-LAST:event_tablePasienMouseClicked
 
     private void CariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CariMouseClicked
-        
+
     }//GEN-LAST:event_CariMouseClicked
 
     private void CariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariActionPerformed
@@ -605,40 +605,38 @@ public class form_resepsionis extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cariActionPerformed
 
     private void btn_cetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakActionPerformed
-        if(pilihTable.getSelectedItem()=="Pasien"){            
-            try{
-            //File file = new File("src/laporan/laporanPasien.jrxml");
-            InputStream file = getClass().getResourceAsStream("/laporan/laporanPasien.jrxml");
-            JasperDesign jasperDesign = JRXmlLoader.load(file);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,null,KoneksiDatabase.getConnection());          
-            JasperViewer.viewReport(jasperPrint, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        }
-        else{
+        if (pilihTable.getSelectedItem() == "Pasien") {
+            try {
+                //File file = new File("src/laporan/laporanPasien.jrxml");
+                InputStream file = getClass().getResourceAsStream("/laporan/laporanPasien.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load(file);
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, KoneksiDatabase.getConnection());
+                JasperViewer.viewReport(jasperPrint, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             btn_cetak.hide();
         }
-    
+
     }//GEN-LAST:event_btn_cetakActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (pilihTable.getSelectedItem()=="Pasien"){
+        if (pilihTable.getSelectedItem() == "Pasien") {
             selectDataPasien();
-        }
-        else if (pilihTable.getSelectedItem()=="Antrian Pasien"){
+        } else if (pilihTable.getSelectedItem() == "Antrian Pasien") {
             try {
                 selectAntrian();
             } catch (SQLException ex) {
                 Logger.getLogger(form_resepsionis.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-      
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tablePasienMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePasienMouseEntered
- 
+
     }//GEN-LAST:event_tablePasienMouseEntered
 
     /**

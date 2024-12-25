@@ -50,7 +50,7 @@ public class inputDataPasien extends javax.swing.JFrame {
         } else {
             try {
                 // Pastikan kolom `nik_pasien` juga disertakan
-                String iDataP = "insert into tb_pasien (nik_pasien, nama_pasien, tanggal_lahir, jenis_kelamin, gol_darah, pekerjaan_pasien, alamat_pasien, telepon) "
+                String iDataP = "insert into tb_pasien (no_rm, nama_pasien, tanggal_lahir, jenis_kelamin, gol_darah, pekerjaan_pasien, alamat_pasien, telepon) "
                         + "values ('" + iNik.getText() + "','" + iNama.getText() + "','" + tanggal + "','" + iJK.getSelectedItem() + "','" + iGol.getSelectedItem() + "','" + iPekerjaan.getText() + "','" + iAlamat.getText() + "','" + iTelepon.getText() + "')";
                 st.executeUpdate(iDataP);
 
@@ -73,8 +73,6 @@ public class inputDataPasien extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btn_submit = new javax.swing.JButton();
         btn_back = new javax.swing.JButton();
@@ -111,13 +109,7 @@ public class inputDataPasien extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addGap(80, 80, 80))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,12 +117,6 @@ public class inputDataPasien extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(43, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel10)
-                .addGap(6, 6, 6))
         );
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -481,7 +467,6 @@ public class inputDataPasien extends javax.swing.JFrame {
     private javax.swing.JTextField iTelepon;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -491,7 +476,6 @@ public class inputDataPasien extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

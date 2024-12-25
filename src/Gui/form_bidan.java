@@ -36,7 +36,7 @@ public class form_bidan extends javax.swing.JFrame {
     
     public void selectAntrian(){        
         try{        
-            Object header[]={"No Antrian","No RM","Nama","Tanggal","Keluhan"};
+            Object header[]={"No Antrian","NIK","Nama","Tanggal","Keluhan"};
             DefaultTableModel data = new DefaultTableModel(null, header);            
             tableAntrian.setModel(data);            
             Connection kon = KoneksiDatabase.getConnection();

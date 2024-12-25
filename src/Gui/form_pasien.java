@@ -13,6 +13,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,20 +39,20 @@ public class form_pasien extends javax.swing.JFrame {
      * Creates new form form_periksa
      */
     public form_pasien() {
-        initComponents();    
+        initComponents();
     }
 
     form_pasien(String no_rm) throws SQLException {
         initComponents();
         jButton1.hide();
         btn_update.hide();
-        btn_edit.hide();        
+        btn_edit.hide();
         Connection kon = KoneksiDatabase.getConnection();
-        try{
-            String slct ="SELECT * FROM tb_pasien where no_rm='"+no_rm+"'";
+        try {
+            String slct = "SELECT * FROM tb_pasien where no_rm='" + no_rm + "'";
             Statement st = kon.createStatement();
             ResultSet rs = st.executeQuery(slct);
-            while(rs.next()){
+            while (rs.next()) {
                 norm.setText(rs.getString(1));
                 Nama.setText(rs.getString(2));
                 JK.setSelectedItem(rs.getString(4));
@@ -59,19 +60,18 @@ public class form_pasien extends javax.swing.JFrame {
                 Alamat.setText(rs.getString(7));
                 Telepon.setText(rs.getString(8));
             }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
         }
-        catch (SQLException e){
-                JOptionPane.showMessageDialog(null,"error :"+e.getMessage());
-        }
-        
-        Object header[]={"No. RM","No. Periksa","Tanggal","Keluhan","Tekanan Darah"};
+
+        Object header[] = {"No. RM", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah"};
         DefaultTableModel data = new DefaultTableModel(null, header);
         tableRiwayat.setModel(data);
-        try{
-            String slct ="SELECT * FROM tb_riwayat where no_rm='"+no_rm+"'";
+        try {
+            String slct = "SELECT * FROM tb_riwayat where no_rm='" + no_rm + "'";
             Statement st = kon.createStatement();
             ResultSet rs = st.executeQuery(slct);
-            while(rs.next()){
+            while (rs.next()) {
                 String kolom1 = rs.getString(2);
                 String kolom2 = rs.getString(1);
                 String kolom3 = rs.getString(3);
@@ -79,23 +79,21 @@ public class form_pasien extends javax.swing.JFrame {
                 String kolom5 = rs.getString(7);
                 String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5};
                 data.addRow(kolom);
-            }}
-        catch (SQLException e){
-            JOptionPane.showMessageDialog(null,"error :"+e.getMessage());
-        }                
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
+        }
     }
-    public void FilterHanyaAngka(java.awt.event.KeyEvent evt){
+
+    public void FilterHanyaAngka(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
-        if (! ((Character.isDigit(c) ||
-                (c == KeyEvent.VK_BACK_SPACE) ||
-                (c == KeyEvent.VK_DELETE))
-                )
-            )
-        {
+        if (!((Character.isDigit(c)
+                || (c == KeyEvent.VK_BACK_SPACE)
+                || (c == KeyEvent.VK_DELETE)))) {
             evt.consume();
         }
     }
-    
+
     form_pasien(String no_rm, String nama, String jk, String gol, String alamat, String telepon) {
         initComponents();
         btn_update.setVisible(false);
@@ -104,20 +102,21 @@ public class form_pasien extends javax.swing.JFrame {
         JK.setSelectedItem(jk);
         darah.setSelectedItem(gol);
         Alamat.setText(alamat);
-        Telepon.setText(telepon); 
+        Telepon.setText(telepon);
         selectRiwayat();
     }
-    public void selectRiwayat(){
-        try{
-            Object header[]={"No. RM","No. Periksa","Tanggal","Keluhan","Tekanan Darah","Berat Badan(kg)","Tinggi(cm)"};
+
+    public void selectRiwayat() {
+        try {
+            Object header[] = {"NIK", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah", "Berat Badan(kg)", "Tinggi(cm)"};
             DefaultTableModel data = new DefaultTableModel(null, header);
             tableRiwayat.setModel(data);
             Connection kon = KoneksiDatabase.getConnection();
-            String slct ="SELECT * FROM tb_riwayat where no_rm='"+norm.getText()+"'";
-            try{
+            String slct = "SELECT * FROM tb_riwayat where no_rm='" + norm.getText() + "'";
+            try {
                 Statement st = kon.createStatement();
                 ResultSet rs = st.executeQuery(slct);
-                while(rs.next()){
+                while (rs.next()) {
                     String kolom1 = rs.getString(2);
                     String kolom2 = rs.getString(1);
                     String kolom3 = rs.getString(3);
@@ -127,34 +126,56 @@ public class form_pasien extends javax.swing.JFrame {
                     String kolom7 = rs.getString(11);
                     String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6, kolom7};
                     data.addRow(kolom);
-                }}
-            catch (SQLException e){
-                JOptionPane.showMessageDialog(null,"error :"+e.getMessage());
-            }     
-        }
-            catch (SQLException ex){
-                Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE,null, ex);
-        }       
-    }
-    public void updateData(){
-        if (Nama.getText().equals("")||Alamat.getText().equals("")||Telepon.getText().equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Data tidak boleh kosong", "Error", 1);
-        }
-        else{
-            Nama.setBackground(new java.awt.Color(56,199,203));
-            Alamat.setBackground(new java.awt.Color(56,199,203));
-            Telepon.setBackground(new java.awt.Color(56,199,203));
-            btn_update.setVisible(false);
-            try{
-                Connection kon = KoneksiDatabase.getConnection();
-                Statement st = kon.createStatement();
-                String sql ="update tb_pasien set nama_pasien='"+Nama.getText()+"', alamat_pasien='"+Alamat.getText()+"',jenis_kelamin='"+JK.getSelectedItem()+"', gol_darah='"+darah.getSelectedItem()+"', telepon='"+Telepon.getText()+"' where no_rm ='"+norm.getText()+"'";
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null,"Data Pasien Berhasil Diupdate");                
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
             }
-             catch (HeadlessException | SQLException e){
-                JOptionPane.showMessageDialog(null,"error : "+e.getMessage());
-            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(form_admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateData() {
+        if (Nama.getText().equals("") || Alamat.getText().equals("") || Telepon.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Data tidak boleh kosong", "Error", 1);
+        } else {
+            Nama.setBackground(new java.awt.Color(56, 199, 203));
+            Alamat.setBackground(new java.awt.Color(56, 199, 203));
+            Telepon.setBackground(new java.awt.Color(56, 199, 203));
+            btn_update.setVisible(false);
+
+            Connection kon;
+            PreparedStatement ps;
+
+            try {
+                // Koneksi ke database
+                kon = KoneksiDatabase.getConnection();
+
+                // Query update dengan prepared statement
+                String sql = "UPDATE tb_pasien SET nama_pasien = ?, alamat_pasien = ?, jenis_kelamin = ?, gol_darah = ?, telepon = ? WHERE no_rm = ?";
+                ps = kon.prepareStatement(sql);
+
+                // Set nilai parameter query
+                ps.setString(1, Nama.getText());
+                ps.setString(2, Alamat.getText());
+                ps.setString(3, JK.getSelectedItem().toString());
+                ps.setString(4, darah.getSelectedItem().toString());
+                ps.setString(5, Telepon.getText());
+                ps.setString(6, norm.getText());
+
+                // Eksekusi query
+                int rowsUpdated = ps.executeUpdate();
+
+                // Cek apakah ada baris yang diupdate
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(null, "Data Pasien Berhasil Diupdate");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Tidak ada data yang diupdate. Periksa kembali no_rm.");
+                }
+
+            } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
         }
     }
 
@@ -328,15 +349,15 @@ public class form_pasien extends javax.swing.JFrame {
                                 .addComponent(Telepon, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 121, Short.MAX_VALUE)
                                 .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(Alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(125, Short.MAX_VALUE))))
+                        .addComponent(Alamat)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,10 +572,10 @@ public class form_pasien extends javax.swing.JFrame {
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         btn_update.setVisible(true);
-        
+
         Nama.setEditable(true);
         Nama.setBackground(new java.awt.Color(255, 255, 255));
-        
+
         Alamat.setEditable(true);
         Alamat.setBackground(new java.awt.Color(255, 255, 255));
         Telepon.setEditable(true);
@@ -564,8 +585,8 @@ public class form_pasien extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-       updateData();
-        
+        updateData();
+
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -582,23 +603,23 @@ public class form_pasien extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void TeleponKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TeleponKeyTyped
-       if ( Telepon.getText().length() == 12 ) {
-                evt.consume();
-                FilterHanyaAngka(evt);
-            }
+        if (Telepon.getText().length() == 12) {
+            evt.consume();
+            FilterHanyaAngka(evt);
+        }
     }//GEN-LAST:event_TeleponKeyTyped
 
     private void NamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NamaKeyTyped
-        if ( Nama.getText().length() == 25 ) {
-                evt.consume();
+        if (Nama.getText().length() == 25) {
+            evt.consume();
         }
     }//GEN-LAST:event_NamaKeyTyped
 
     private void AlamatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlamatKeyTyped
-        if ( Telepon.getText().length() == 40 ) {
-                evt.consume();
-                FilterHanyaAngka(evt);
-            }
+        if (Telepon.getText().length() == 40) {
+            evt.consume();
+            FilterHanyaAngka(evt);
+        }
     }//GEN-LAST:event_AlamatKeyTyped
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -606,18 +627,18 @@ public class form_pasien extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void tableRiwayatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableRiwayatKeyPressed
-        
+
     }//GEN-LAST:event_tableRiwayatKeyPressed
 
     private void tableRiwayatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRiwayatMouseClicked
         int row = tableRiwayat.getSelectedRow();
-        if (row!=-1){
-            try{
+        if (row != -1) {
+            try {
                 Connection kon = KoneksiDatabase.getConnection();
-                String slct ="SELECT * FROM tb_riwayat where no_periksa='"+tableRiwayat.getValueAt(row, 1).toString()+"'";
+                String slct = "SELECT * FROM tb_riwayat where no_periksa='" + tableRiwayat.getValueAt(row, 1).toString() + "'";
                 Statement st = kon.createStatement();
                 ResultSet rs = st.executeQuery(slct);
-                while(rs.next()){
+                while (rs.next()) {
                     tindakan.setText(rs.getString(4));
                     diagnosa.setText(rs.getString(5));
                     resep.setText(rs.getString(6));
@@ -631,19 +652,19 @@ public class form_pasien extends javax.swing.JFrame {
 
     private void btn_cetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakActionPerformed
         btn_cetak.show();
-            try{
+        try {
             Map param = new HashMap();
             //File file = new File("src/laporan/laporanRiwayat.jrxml");
             InputStream file = getClass().getResourceAsStream("/laporan/laporanRiwayat.jrxml");
             param.put("nama", String.valueOf(Nama.getText()));
             param.put("gol", String.valueOf(darah.getSelectedItem()));
-            param.put("norm", Integer.parseInt(norm.getText()));
+            param.put("norm", Long.parseLong(norm.getText()));
             param.put("rm", String.valueOf(norm.getText()));
-            
+
             JasperDesign jasperDesign = JRXmlLoader.load(file);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,param,KoneksiDatabase.getConnection());
-            
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, KoneksiDatabase.getConnection());
+
             JasperViewer.viewReport(jasperPrint, false);
         } catch (Exception e) {
             e.printStackTrace();
