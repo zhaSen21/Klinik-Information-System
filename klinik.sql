@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 25 Des 2024 pada 09.11
+-- Waktu pembuatan: 25 Des 2024 pada 13.04
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -75,7 +75,6 @@ INSERT INTO `tb_dokter` (`id_dokter`, `nama_dokter`, `alamat_dokter`, `telepon_d
 
 CREATE TABLE `tb_pasien` (
   `no_rm` bigint NOT NULL,
-  `nik_pasien` bigint NOT NULL,
   `nama_pasien` varchar(25) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `jenis_kelamin` varchar(1) NOT NULL,
@@ -89,11 +88,13 @@ CREATE TABLE `tb_pasien` (
 -- Dumping data untuk tabel `tb_pasien`
 --
 
-INSERT INTO `tb_pasien` (`no_rm`, `nik_pasien`, `nama_pasien`, `tanggal_lahir`, `jenis_kelamin`, `gol_darah`, `pekerjaan_pasien`, `alamat_pasien`, `telepon`) VALUES
-(17, 3171012304850001, 'Budi Santoso', '2003-12-06', 'L', 'O', 'Guru', 'Jl. Merdeka No. 12, Jakarta Pusat', '081234567890'),
-(18, 3201020108920002, 'Siti Nurhaliza', '1992-08-01', 'P', 'A', 'Dokter', 'Jl. Pahlawan No. 5, Bogor', '085678901234'),
-(19, 3302031511780003, 'Joko Widodo', '1978-11-17', 'L', 'B', 'Wiraswasta', 'Jl. Sudirman No. 20', '087712345678'),
-(20, 3404052703890004, 'Ani Setiawati ', '1989-12-06', 'P', 'AB', 'Apoteker', 'Jl. Diponegoro No. 8', '082234567890');
+INSERT INTO `tb_pasien` (`no_rm`, `nama_pasien`, `tanggal_lahir`, `jenis_kelamin`, `gol_darah`, `pekerjaan_pasien`, `alamat_pasien`, `telepon`) VALUES
+(3171012304850001, 'Budi Santoso', '2003-12-06', 'L', 'O', 'Guru', 'Jl. Merdeka No. 12, Jakarta Pusat', '081234567890'),
+(3201020108920002, 'Siti Nurhaliza', '1992-08-01', 'P', 'A', 'Dokter', 'Jl. Pahlawan No. 5, Bogor', '085678901234'),
+(3273045678901234, 'Ahmad Budiman', '1985-05-02', 'L', 'A', 'Programmer', 'Jl. Sudirman No. 123', '081234567890'),
+(3302031511780003, 'Joko Widodo', '1978-11-17', 'L', 'B', 'Wiraswasta', 'Jl. Sudirman No. 20', '087712345678'),
+(3404052703890004, 'Ani Setiawati ', '1989-12-06', 'P', 'AB', 'Apoteker', 'Jl. Diponegoro No. 8', '082234567890'),
+(3471098765432109, 'Chandra Wijaya', '1978-12-20', 'L', 'B', 'Mahasiswa', 'RS Umum Daerah, Jl. Diponegoro', '082145678901');
 
 -- --------------------------------------------------------
 
@@ -159,7 +160,7 @@ INSERT INTO `tb_riwayat` (`no_periksa`, `no_rm`, `tanggal_periksa`, `tindakan`, 
 --
 ALTER TABLE `tb_antrian`
   ADD PRIMARY KEY (`no_antrian`),
-  ADD KEY `no_rm` (`no_rm`);
+  ADD UNIQUE KEY `no_rm` (`no_rm`);
 
 --
 -- Indeks untuk tabel `tb_dokter`
@@ -183,7 +184,8 @@ ALTER TABLE `tb_pegawai`
 -- Indeks untuk tabel `tb_riwayat`
 --
 ALTER TABLE `tb_riwayat`
-  ADD PRIMARY KEY (`no_periksa`);
+  ADD PRIMARY KEY (`no_periksa`),
+  ADD UNIQUE KEY `no_rm` (`no_rm`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -193,13 +195,23 @@ ALTER TABLE `tb_riwayat`
 -- AUTO_INCREMENT untuk tabel `tb_antrian`
 --
 ALTER TABLE `tb_antrian`
-  MODIFY `no_antrian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `no_antrian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_pasien`
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
-ALTER TABLE `tb_pasien`
-  MODIFY `no_rm` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- Ketidakleluasaan untuk tabel `tb_antrian`
+--
+ALTER TABLE `tb_antrian`
+  ADD CONSTRAINT `tb_antrian_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tb_pasien` (`no_rm`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tb_riwayat`
+--
+ALTER TABLE `tb_riwayat`
+  ADD CONSTRAINT `tb_riwayat_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tb_pasien` (`no_rm`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
