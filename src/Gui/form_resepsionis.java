@@ -61,38 +61,44 @@ public class form_resepsionis extends javax.swing.JFrame {
     public void cariDataPasien() throws SQLException {
         scrollpane.show();
         if ("".equals(Cari.getText())) {
-            JOptionPane.showMessageDialog(null, "Silahkan masukan No RM");
+            JOptionPane.showMessageDialog(null, "Silahkan masukkan Nama");
         } else {
             try {
-                int baris = 0;
                 String cari = Cari.getText();
-                Object header[] = {"No RM", "NIK", "Nama", "Tanggal Lahir", "Jenis Kelamin(L/P)", "Gol Darah", "Pekerjaan", "Alamat", "Telepon"};//membuat nama kolom tabel
+                Object header[] = {"NIK", "Nama", "Tanggal Lahir", "Jenis Kelamin(L/P)", "Gol Darah", "Pekerjaan", "Alamat", "Telepon"}; // Membuat nama kolom tabel
                 DefaultTableModel data = new DefaultTableModel(null, header);
                 tablePasien.setModel(data);
+
                 Connection kon = KoneksiDatabase.getConnection();
-                String cariData = "SELECT * FROM tb_pasien where nama_pasien ='" + cari + "'";//perintah sql untuk select sesuai dengan nama pasien
-                Statement st = kon.createStatement();
-                ResultSet rs = st.executeQuery(cariData);
+                String cariData = "SELECT * FROM tb_pasien WHERE LOWER(nama_pasien) = LOWER(?)"; // Mengabaikan huruf besar/kecil
+                PreparedStatement ps = kon.prepareStatement(cariData);
+                ps.setString(1, cari); // Menggunakan PreparedStatement untuk keamanan SQL Injection
+                ResultSet rs = ps.executeQuery();
+
+                boolean adaData = false;
                 while (rs.next()) {
-                    baris = rs.getRow();
-                    String kolom1 = rs.getString(1);
-                    String kolom2 = rs.getString(2);
-                    String kolom3 = rs.getString(3);
-                    String kolom4 = rs.getString(4);
-                    String kolom5 = rs.getString(5);
-                    String kolom6 = rs.getString(6);
-                    String kolom7 = rs.getString(7);
-                    String kolom8 = rs.getString(8);
-                    String kolom9 = rs.getString(9);
-                    String kolom[] = {kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8, kolom9};
-                    data.addRow(kolom); //menampilkan hasil dari perintah sql ke tabel
+                    adaData = true;
+                    // Ambil data dari kolom sesuai urutan tabel database
+                    String kolom1 = rs.getString("no_rm");
+                    String kolom2 = rs.getString("nama_pasien");
+                    String kolom3 = rs.getString("tanggal_lahir");
+                    String kolom4 = rs.getString("jenis_kelamin");
+                    String kolom5 = rs.getString("gol_darah");
+                    String kolom6 = rs.getString("pekerjaan_pasien");
+                    String kolom7 = rs.getString("alamat_pasien");
+                    String kolom8 = rs.getString("telepon");
+                    // Tambahkan data ke dalam tabel
+                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8};
+                    data.addRow(kolom);
                 }
-                if (baris == 0) {
+
+                // Tampilkan pesan jika data tidak ditemukan
+                if (!adaData) {
                     JOptionPane.showMessageDialog(null, "Nama yang dimasukkan salah atau belum terdaftar");
-                    selectDataPasien();
+                    selectDataPasien(); // Mengisi tabel dengan seluruh data jika pencarian gagal
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Nama yang dimasukkan salah atau belum terdaftar");
+                JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mencari data: " + ex.getMessage());
             }
         }
     }
