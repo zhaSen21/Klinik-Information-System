@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
  *
- * a
+ * @author Deo
  */
 public class KoneksiDatabase {
     private static Connection koneksi;
