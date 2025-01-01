@@ -3,9 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_bidan.java</file>
             <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_login.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_periksa.java</file>
             <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_resepsionis.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/inputDataPasien.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Main/SistemInformasiAdministrasiDanRekamMedisPasienKlinik.java</file>
             <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_pasien.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/form_rawat.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Main/KoneksiDatabase.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Gui/inputDataPegawai.java</file>
+            <file>file:/D:/CAPSTONE%20PROJECT/Klinik%20Information%20System/src/Implements/ImplementPegawai.java</file>
         </group>
     </open-files>
 </project-private>

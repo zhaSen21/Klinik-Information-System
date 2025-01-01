@@ -356,51 +356,45 @@ public class form_rawat extends javax.swing.JFrame {
 
     public void generateID() throws SQLException {
         Connection kon = KoneksiDatabase.getConnection();
-        Statement st;
-        ResultSet rs;
-        String sql;
+        Statement st = null;
+        ResultSet rs = null;
 
         try {
-            // Get the latest record sorted by `tanggal_periksa` in descending order
-            sql = "SELECT * FROM tb_riwayat ORDER BY tanggal_periksa DESC";
+            // Ambil tanggal saat ini (format: yyMMdd)
+            String currentDate = new SimpleDateFormat("yyMMdd").format(new java.util.Date());
+
+            // Query untuk mendapatkan ID terbaru berdasarkan tanggal saat ini
+            String sql = "SELECT no_periksa FROM tb_riwayat WHERE tanggal_periksa = CURDATE() ORDER BY no_periksa DESC LIMIT 1";
             st = kon.createStatement();
             rs = st.executeQuery(sql);
 
+            String newId;
             if (rs.next()) {
-                // Extract the date from the most recent record
-                String tahun = rs.getString("tanggal_periksa").substring(2, 4);
-                String bulan = rs.getString("tanggal_periksa").substring(5, 7);
-                String hari = rs.getString("tanggal_periksa").substring(8, 10);
-                String tgl = tahun + bulan + hari;
+                // Ambil nomor terakhir (bagian NNN dari ID)
+                String latestId = rs.getString("no_periksa");
+                int sequenceNumber = Integer.parseInt(latestId.substring(6)); // Ambil bagian NNN
+                sequenceNumber++; // Tambahkan 1 ke nomor terakhir
 
-                // Check if the date matches the current date (in `jLabel10`)
-                if (tgl.equals(jLabel10.getText())) {
-                    // If the date matches, get the latest `no_periksa`
-                    sql = "SELECT * FROM tb_riwayat ORDER BY no_periksa DESC LIMIT 1";
-                    rs = st.executeQuery(sql);
-
-                    if (rs.next()) {
-                        // Increment the latest `no_periksa`
-                        int latestId = rs.getInt("no_periksa");
-                        int newId = latestId + 1; // Increment the ID
-                        jLabel11.setText(String.valueOf(newId));
-                    } else {
-                        // If no record is found for the date, start with a new ID
-                        String newId = jLabel10.getText() + "001";
-                        jLabel11.setText(newId);
-                    }
-                } else {
-                    // If the date does not match, start with a new ID
-                    String newId = jLabel10.getText() + "001";
-                    jLabel11.setText(newId);
-                }
+                // Format ID baru
+                newId = currentDate + String.format("%03d", sequenceNumber);
             } else {
-                // If no records exist in the table, start with a new ID
-                String newId = jLabel10.getText() + "001";
-                jLabel11.setText(newId);
+                // Jika belum ada data untuk tanggal saat ini, mulai dari 001
+                newId = currentDate + "001";
             }
+
+            // Set ID baru ke jLabel11
+            jLabel11.setText(newId);
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } finally {
+            // Pastikan resource ditutup
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
         }
     }
 
