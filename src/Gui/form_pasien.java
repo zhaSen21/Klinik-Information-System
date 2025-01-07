@@ -64,7 +64,7 @@ public class form_pasien extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "error :" + e.getMessage());
         }
 
-        Object header[] = {"No. RM", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah"};
+        Object header[] = {"NIK", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah"};
         DefaultTableModel data = new DefaultTableModel(null, header);
         tableRiwayat.setModel(data);
         try {

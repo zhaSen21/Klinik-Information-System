@@ -12,7 +12,11 @@
             </test-roots>
         </data>
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
+<<<<<<< HEAD
             <definitions>nbproject/lib\nblibraries.properties</definitions>
+=======
+            <definitions>dist/lib\nblibraries.properties</definitions>
+>>>>>>> 08a0d49b0413538404507d8fedfbc5d1977291b6
         </libraries>
     </configuration>
 </project>
