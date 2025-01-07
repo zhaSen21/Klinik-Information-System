@@ -47,19 +47,23 @@ public class inputDataPasien extends javax.swing.JFrame {
         // Validasi data tidak boleh kosong
         if (iNama.getText().equals("") || iAlamat.getText().equals("") || iTelepon.getText().equals("") || iPekerjaan.getText().equals("") || iNik.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Data tidak boleh kosong", "Error", 1);
-        } else {
-            try {
-                // Pastikan kolom `nik_pasien` juga disertakan
-                String iDataP = "insert into tb_pasien (no_rm, nama_pasien, tanggal_lahir, jenis_kelamin, gol_darah, pekerjaan_pasien, alamat_pasien, telepon) "
-                        + "values ('" + iNik.getText() + "','" + iNama.getText() + "','" + tanggal + "','" + iJK.getSelectedItem() + "','" + iGol.getSelectedItem() + "','" + iPekerjaan.getText() + "','" + iAlamat.getText() + "','" + iTelepon.getText() + "')";
-                st.executeUpdate(iDataP);
-
-                JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
-                this.dispose();
-            } catch (HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            }
         }
+        if (iNik.getText().length() != 16) {
+            JOptionPane.showMessageDialog(rootPane, "NIK harus terdiri dari 16 digit angka.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            // Pastikan kolom `nik_pasien` juga disertakan
+            String iDataP = "insert into tb_pasien (no_rm, nama_pasien, tanggal_lahir, jenis_kelamin, gol_darah, pekerjaan_pasien, alamat_pasien, telepon) "
+                    + "values ('" + iNik.getText() + "','" + iNama.getText() + "','" + tanggal + "','" + iJK.getSelectedItem() + "','" + iGol.getSelectedItem() + "','" + iPekerjaan.getText() + "','" + iAlamat.getText() + "','" + iTelepon.getText() + "')";
+            st.executeUpdate(iDataP);
+
+            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+            this.dispose();
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+
     }
 
     /**
@@ -417,7 +421,17 @@ public class inputDataPasien extends javax.swing.JFrame {
     }//GEN-LAST:event_iNikActionPerformed
 
     private void iNikKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iNikKeyTyped
-        // TODO add your handling code here:
+        // Ensure the input is a digit
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Block non-numeric input
+            return;
+        }
+
+        // Prevent input if length exceeds 16
+        if (iNik.getText().length() >= 16) {
+            evt.consume(); // Block input if length is 16 or more
+        }
     }//GEN-LAST:event_iNikKeyTyped
 
     /**

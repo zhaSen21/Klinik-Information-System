@@ -64,13 +64,13 @@ public class form_resepsionis extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Silahkan masukkan Nama");
         } else {
             try {
-                String cari = Cari.getText();
+                String cari = "%" + Cari.getText().toLowerCase() + "%"; // Menambahkan wildcard untuk pencarian sebagian
                 Object header[] = {"NIK", "Nama", "Tanggal Lahir", "Jenis Kelamin(L/P)", "Gol Darah", "Pekerjaan", "Alamat", "Telepon"}; // Membuat nama kolom tabel
                 DefaultTableModel data = new DefaultTableModel(null, header);
                 tablePasien.setModel(data);
 
                 Connection kon = KoneksiDatabase.getConnection();
-                String cariData = "SELECT * FROM tb_pasien WHERE LOWER(nama_pasien) = LOWER(?)"; // Mengabaikan huruf besar/kecil
+                String cariData = "SELECT * FROM tb_pasien WHERE LOWER(nama_pasien) LIKE ?"; // Menggunakan LIKE untuk pencarian sebagian
                 PreparedStatement ps = kon.prepareStatement(cariData);
                 ps.setString(1, cari); // Menggunakan PreparedStatement untuk keamanan SQL Injection
                 ResultSet rs = ps.executeQuery();
