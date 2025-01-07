@@ -356,7 +356,7 @@ public class form_rawat extends javax.swing.JFrame {
 
     public void generateID() throws SQLException {
         Connection kon = KoneksiDatabase.getConnection();
-        Statement st = null;
+        PreparedStatement pst = null;
         ResultSet rs = null;
 
         try {
@@ -364,9 +364,11 @@ public class form_rawat extends javax.swing.JFrame {
             String currentDate = new SimpleDateFormat("yyMMdd").format(new java.util.Date());
 
             // Query untuk mendapatkan ID terbaru berdasarkan tanggal saat ini
-            String sql = "SELECT no_periksa FROM tb_riwayat WHERE tanggal_periksa = CURDATE() ORDER BY no_periksa DESC LIMIT 1";
-            st = kon.createStatement();
-            rs = st.executeQuery(sql);
+            String sql = "SELECT no_periksa FROM tb_riwayat WHERE no_periksa LIKE ? ORDER BY no_periksa DESC LIMIT 1";
+            pst = kon.prepareStatement(sql);
+            pst.setString(1, currentDate + "%"); // Filter ID berdasarkan tanggal
+
+            rs = pst.executeQuery();
 
             String newId;
             if (rs.next()) {
@@ -382,6 +384,13 @@ public class form_rawat extends javax.swing.JFrame {
                 newId = currentDate + "001";
             }
 
+            // Pastikan ID baru tidak duplikat dengan pengecekan eksplisit
+            while (isIdExists(kon, newId)) {
+                // Jika ID sudah ada, increment sequence lagi
+                int sequenceNumber = Integer.parseInt(newId.substring(6)) + 1;
+                newId = currentDate + String.format("%03d", sequenceNumber);
+            }
+
             // Set ID baru ke jLabel11
             jLabel11.setText(newId);
 
@@ -392,11 +401,39 @@ public class form_rawat extends javax.swing.JFrame {
             if (rs != null) {
                 rs.close();
             }
-            if (st != null) {
-                st.close();
+            if (pst != null) {
+                pst.close();
             }
         }
     }
+
+    /**
+     * Helper method untuk memeriksa apakah ID sudah ada di database.
+     */
+    private boolean isIdExists(Connection kon, String id) throws SQLException {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT COUNT(*) FROM tb_riwayat WHERE no_periksa = ?";
+            pst = kon.prepareStatement(sql);
+            pst.setString(1, id);
+
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+        }
+        return false;
+    }
+
 
     private void btn_selesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesaiActionPerformed
         try {
