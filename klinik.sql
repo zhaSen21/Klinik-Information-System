@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 26 Des 2024 pada 07.27
+-- Waktu pembuatan: 08 Jan 2025 pada 02.38
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -32,6 +32,7 @@ CREATE TABLE `tb_antrian` (
   `no_rm` bigint NOT NULL,
   `nama` varchar(25) NOT NULL,
   `tanggal_periksa` date NOT NULL,
+  `layanan` varchar(50) NOT NULL,
   `keluhan` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -39,10 +40,18 @@ CREATE TABLE `tb_antrian` (
 -- Dumping data untuk tabel `tb_antrian`
 --
 
-INSERT INTO `tb_antrian` (`no_antrian`, `no_rm`, `nama`, `tanggal_periksa`, `keluhan`) VALUES
-(3, 3171012304850001, 'Budi Santoso', '2024-12-31', 'Sakit kepala'),
-(4, 3201020108920002, 'Siti Nurhaliza', '2025-01-03', 'Kaki bengkak'),
-(5, 3404052703890004, 'Ani Setiawati ', '2025-02-01', 'Diare');
+INSERT INTO `tb_antrian` (`no_antrian`, `no_rm`, `nama`, `tanggal_periksa`, `layanan`, `keluhan`) VALUES
+(1, 3171010101900001, 'Budi Santoso', '2024-03-08', 'Umum', 'Demam dan batuk sudah 3 hari'),
+(2, 3302030303850003, 'Rahmat Hidayat', '2024-03-08', 'Umum', 'Sakit kepala dan nyeri otot'),
+(3, 3505050505950005, 'Eko Prasetyo', '2024-03-09', 'Umum', 'Ruam kulit di tangan'),
+(4, 3172070707830007, 'Dedi Irawan', '2024-03-09', 'Umum', 'Sakit perut dan mual'),
+(5, 3405101010870010, 'Indra Permana', '2024-03-10', 'Umum', 'Nyeri punggung bawah'),
+(6, 3171111111930011, 'Siti Aminah', '2024-03-08', 'ANC', 'Mual dan muntah di pagi hari (morning sickness), usia kehamilan 10 minggu'),
+(7, 3302131313960013, 'Dewi Lestari', '2024-03-09', 'KB', 'Konsultasi pemilihan metode kontrasepsi'),
+(8, 3505151515820015, 'Intan Permata', '2024-03-09', 'Umum', 'Pusing dan lemas'),
+(9, 3172171717840017, 'Larasati Putri', '2024-03-10', 'Imunisasi', 'Imunisasi TT (Tetanus Toksoid)'),
+(10, 3405202020830020, 'Olivia Natalia', '2024-03-10', 'Umum', 'Insomnia dan cemas'),
+(11, 3171012304850001, 'Budi Santoso', '2025-01-06', 'Umum', 'Nyeri perut, mual');
 
 -- --------------------------------------------------------
 
@@ -90,11 +99,28 @@ CREATE TABLE `tb_pasien` (
 
 INSERT INTO `tb_pasien` (`no_rm`, `nama_pasien`, `tanggal_lahir`, `jenis_kelamin`, `gol_darah`, `pekerjaan_pasien`, `alamat_pasien`, `telepon`) VALUES
 (3171012304850001, 'Budi Santoso', '2003-12-06', 'L', 'O', 'Guru', 'Jl. Merdeka No. 12, Jakarta Pusat', '081234567890'),
-(3201020108920002, 'Siti Nurhaliza', '1992-08-01', 'P', 'A', 'Dokter', 'Jl. Pahlawan No. 5, Bogor', '085678901234'),
+(3171111111930011, 'Siti Aminah', '1993-11-11', 'P', 'A', 'Guru', 'Jl. Kenari No. 11, Jakarta Timur', '81313131313'),
+(3172070707830007, 'Dedi Irawan', '1983-07-07', 'L', 'B', 'Arsitek', 'Jl. Dahlia No. 7, Jakarta Selatan', '85766778899'),
+(3172171717840017, 'Larasati Putri', '1984-05-17', 'P', 'AB', 'Akuntan', 'Jl. Camar No. 17, Tangerang', '85919191919'),
+(3201020202920002, 'Andi Pratama', '1992-02-02', 'L', 'A', 'Dokter', 'Jl. Melati No. 2, Bogor', '85698765432'),
+(3201121212860012, 'Rina Sari', '1986-12-12', 'P', 'B', 'Dokter Gigi', 'Jl. Cendrawasih No. 12, Bekasi', '85814141414'),
+(3202080808980008, 'Faisal Akbar', '1998-08-08', 'L', 'AB', 'Mahasiswa', 'Jl. Bougenville No. 8, Depok', '87899001122'),
+(3202181818970018, 'Maya Anggraini', '1997-06-18', 'P', 'O', 'Psikolog', 'Jl. Pipit No. 18, Depok', '87120202020'),
 (3273045678901234, 'Ahmad Budiman', '1985-05-02', 'L', 'A', 'Programmer', 'Jl. Sudirman No. 123', '081234567890'),
+(3302030303850003, 'Rahmat Hidayat', '1985-03-03', 'L', 'B', 'Polisi', 'Jl. Kenanga No. 3, Bandung', '87788990011'),
 (3302031511780003, 'Joko Widodo', '1978-11-17', 'L', 'B', 'Wiraswasta', 'Jl. Sudirman No. 20', '087712345678'),
-(3404052703890004, 'Ani Setiawati ', '1989-12-06', 'P', 'AB', 'Apoteker', 'Jl. Diponegoro No. 8', '082234567890'),
-(3471098765432109, 'Chandra Wijaya', '1978-12-20', 'L', 'B', 'Mahasiswa', 'RS Umum Daerah, Jl. Diponegoro', '082145678901');
+(3302131313960013, 'Dewi Lestari', '1996-01-13', 'P', 'AB', 'Apoteker', 'Jl. Merpati No. 13, Cimahi', '87915151515'),
+(3303090909910009, 'Guntur Nugroho', '1991-09-09', 'L', 'O', 'Atlet', 'Jl. Teratai No. 9, Semarang', '82344556677'),
+(3303090909912229, 'Indra Permana', '1987-10-10', 'L', 'A', 'TNI', 'Jl. Mawar Putih No. 10, Solo', '89788990011'),
+(3303191919900019, 'Nita Kusuma', '1990-07-19', 'P', 'A', 'Perawat', 'Jl. Gelatik No. 19, Bogor', '82521212121'),
+(3303191919922219, 'Olivia Natalia', '1983-08-20', 'P', 'B', 'Pengacara', 'Jl. Merak No. 20, Semarang', '89922222222'),
+(3404040404880004, 'Surya Dharma', '1988-04-04', 'L', 'AB', 'Pengusaha', 'Jl. Anggrek No. 4, Yogyakarta', '82233445566'),
+(3404141414890014, 'Ayu Wulandari', '1989-02-14', 'P', 'O', 'Bidan', 'Jl. Nuri No. 14, Magelang', '82416161616'),
+(3471098765432109, 'Chandra Wijaya', '1978-12-20', 'L', 'B', 'Mahasiswa', 'RS Umum Daerah, Jl. Diponegoro', '082145678901'),
+(3505050505950005, 'Eko Prasetyo', '1995-05-05', 'L', 'O', 'Programmer', 'Jl. Tulip No. 5, Surabaya', '89655443322'),
+(3505151515820015, 'Intan Permata', '1982-03-15', 'P', 'A', 'Notaris', 'Jl. Kakaktua No. 15, Malang', '89817171717'),
+(3606060606800006, 'Herman Susanto', '1980-06-06', 'L', 'A', 'Pilot', 'Jl. Cempaka No. 6, Medan', '81122334455'),
+(3606161616990016, 'Kartika Dewi', '1999-04-16', 'P', 'B', 'Desainer Grafis', 'Jl. Kasuari No. 16, Palembang', '81418181818');
 
 -- --------------------------------------------------------
 
@@ -137,19 +163,21 @@ CREATE TABLE `tb_riwayat` (
   `tindakan` varchar(500) NOT NULL,
   `diagnosa` varchar(500) NOT NULL,
   `resep` varchar(500) NOT NULL,
-  `tekanan_darah` varchar(7) NOT NULL,
+  `tekanan_darah` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `keluhan` varchar(500) NOT NULL,
   `nama_dokter` varchar(32) NOT NULL,
   `berat` int NOT NULL,
-  `tinggi` int NOT NULL
+  `tinggi` int NOT NULL,
+  `layanan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_riwayat`
 --
 
-INSERT INTO `tb_riwayat` (`no_periksa`, `no_rm`, `tanggal_periksa`, `tindakan`, `diagnosa`, `resep`, `tekanan_darah`, `keluhan`, `nama_dokter`, `berat`, `tinggi`) VALUES
-(241221001, 3302031511780003, '2024-12-27', 'Kurangi merokok', 'Tidak Sakit', 'Vitamin C', '120', 'Checkup', 'DR. Paramintha', 68, 170);
+INSERT INTO `tb_riwayat` (`no_periksa`, `no_rm`, `tanggal_periksa`, `tindakan`, `diagnosa`, `resep`, `tekanan_darah`, `keluhan`, `nama_dokter`, `berat`, `tinggi`, `layanan`) VALUES
+(250108001, 3171012304850001, '2025-01-15', 'Anamnesis, pemeriksaan suhu, pemeriksaan tenggorokan', 'Influenza', 'Paracetamol, Vitamin C', '120/80 mmHg', 'Demam, batuk, pilek', 'Bd. Diah Lestari', 70, 175, 'Umum'),
+(250108002, 3171012304850001, '2025-01-06', 'Anamnesis, pemeriksaan fisik abdomen (perut)', 'Gastritis', 'Antasida, Omeprazole', '110/70 mmHg', 'Nyeri perut, mual', 'Bd. Diah Lestari', 72, 175, 'Umum');
 
 --
 -- Indexes for dumped tables
@@ -184,8 +212,7 @@ ALTER TABLE `tb_pegawai`
 -- Indeks untuk tabel `tb_riwayat`
 --
 ALTER TABLE `tb_riwayat`
-  ADD PRIMARY KEY (`no_periksa`),
-  ADD UNIQUE KEY `no_rm` (`no_rm`);
+  ADD PRIMARY KEY (`no_periksa`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -195,23 +222,7 @@ ALTER TABLE `tb_riwayat`
 -- AUTO_INCREMENT untuk tabel `tb_antrian`
 --
 ALTER TABLE `tb_antrian`
-  MODIFY `no_antrian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `tb_antrian`
---
-ALTER TABLE `tb_antrian`
-  ADD CONSTRAINT `tb_antrian_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tb_pasien` (`no_rm`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `tb_riwayat`
---
-ALTER TABLE `tb_riwayat`
-  ADD CONSTRAINT `tb_riwayat_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tb_pasien` (`no_rm`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `no_antrian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
