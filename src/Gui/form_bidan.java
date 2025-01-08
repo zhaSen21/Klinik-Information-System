@@ -36,7 +36,7 @@ public class form_bidan extends javax.swing.JFrame {
     
     public void selectAntrian(){        
         try{        
-            Object header[]={"No Antrian","NIK","Nama","Tanggal","Keluhan"};
+            Object header[]={"No Antrian","NIK","Nama","Tanggal","Layanan","Keluhan"};
             DefaultTableModel data = new DefaultTableModel(null, header);            
             tableAntrian.setModel(data);            
             Connection kon = KoneksiDatabase.getConnection();
@@ -50,7 +50,8 @@ public class form_bidan extends javax.swing.JFrame {
                     String kolom3 = rs.getString(3);
                     String kolom4 = rs.getString(4);
                     String kolom5 = rs.getString(5);
-                    String kolom[] ={kolom1, kolom2, kolom3, kolom4, kolom5};
+                    String kolom6 = rs.getString(6);
+                    String kolom[] ={kolom1, kolom2, kolom3, kolom4, kolom5, kolom6};
                     data.addRow(kolom);
                 }
         }
@@ -295,13 +296,14 @@ public class form_bidan extends javax.swing.JFrame {
         }
         else {          
             try {
-                String norm, r1, r2, r3, nama_dokter;
+                String norm, r1, r2, r3, r4, nama_dokter;
                 norm = tableAntrian.getValueAt(row, 1).toString();
                 r1 = tableAntrian.getValueAt(row, 2).toString();
                 r2 = tableAntrian.getValueAt(row, 3).toString();
                 r3 = tableAntrian.getValueAt(row, 4).toString();
+                r4 = tableAntrian.getValueAt(row, 5).toString();
                 nama_dokter = jLabel2.getText();
-                form_rawat fr = new form_rawat(norm, r1, r2, r3, nama_dokter);
+                form_rawat fr = new form_rawat(norm, r1, r2, r3, r4, nama_dokter);
                 fr.show();
             } catch (SQLException ex) {
                 Logger.getLogger(form_bidan.class.getName()).log(Level.SEVERE, null, ex);

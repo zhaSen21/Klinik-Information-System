@@ -137,7 +137,7 @@ public class form_resepsionis extends javax.swing.JFrame {
     public void selectAntrian() throws SQLException {
         try {
             scrollpane.show();
-            Object header[] = {"No Antrian", "NIK", "Nama", "Tanggal", "Keluhan"};
+            Object header[] = {"No Antrian", "NIK", "Nama", "Tanggal", "Layanan", "Keluhan"};
             DefaultTableModel data = new DefaultTableModel(null, header);
             tablePasien.setModel(data);
             Connection kon = KoneksiDatabase.getConnection();
@@ -151,7 +151,8 @@ public class form_resepsionis extends javax.swing.JFrame {
                     String kolom3 = rs.getString(3);
                     String kolom4 = rs.getString(4);
                     String kolom5 = rs.getString(5);
-                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5};
+                    String kolom6 = rs.getString(6);
+                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6};
                     data.addRow(kolom);
                 }
             } catch (SQLException e) {

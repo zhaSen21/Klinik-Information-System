@@ -32,11 +32,12 @@ public class form_rawat extends javax.swing.JFrame {
         initComponents();
     }
 
-    form_rawat(String norm, String r1, String r2, String r3, String nama_dokter) throws SQLException {
+    form_rawat(String norm, String r1, String r2, String r3, String r4, String nama_dokter) throws SQLException {
         initComponents();
         lnNorm.setText(norm);
         lbNama.setText(r1);
-        lbKel.setText(r3);
+        lbKel.setText(r4);
+        lbLay.setText(r3);
         tanggal.setText(r2);
         tanggal.hide();
         nama.setText(nama_dokter);
@@ -100,6 +101,8 @@ public class form_rawat extends javax.swing.JFrame {
         bb = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         tinggi = new javax.swing.JTextField();
+        lay1 = new javax.swing.JLabel();
+        lbLay = new javax.swing.JLabel();
         tanggal = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -189,6 +192,11 @@ public class form_rawat extends javax.swing.JFrame {
 
         tinggi.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
 
+        lay1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        lay1.setText("Layanan   :");
+
+        lbLay.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -196,51 +204,55 @@ public class form_rawat extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_selesai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbNama, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(kel)
+                            .addComponent(jLabel1)
                             .addGap(18, 18, 18)
-                            .addComponent(lbKel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lnNorm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton1))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(lbNama, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addGap(19, 19, 19)
+                            .addComponent(jScrollPane3))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1)
+                                .addComponent(jScrollPane2)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(kel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lbKel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lay1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(tensi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(36, 36, 36)
+                                    .addComponent(tensi, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bb, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bb, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tinggi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lnNorm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButton1))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(19, 19, 19)
-                                    .addComponent(jScrollPane3))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1)
-                                        .addComponent(jScrollPane2))))
-                            .addContainerGap()))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btn_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                                    .addComponent(tinggi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(lbLay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,9 +270,11 @@ public class form_rawat extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(lbNama))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(kel)
-                    .addComponent(lbKel))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(kel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbKel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lay1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbLay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -444,7 +458,7 @@ public class form_rawat extends javax.swing.JFrame {
                 try {
                     Connection kon = KoneksiDatabase.getConnection();
                     Statement st = kon.createStatement();
-                    String riwayat = "insert into tb_riwayat(no_periksa, no_rm, tanggal_periksa, tindakan, diagnosa, resep, tekanan_darah, keluhan, nama_dokter, berat, tinggi) values ('" + jLabel11.getText() + "','" + lnNorm.getText() + "','" + tanggal.getText() + "','" + tindakan.getText() + "','" + diagnosa.getText() + "','" + resep.getText() + "','" + tensi.getText() + "','" + lbKel.getText() + "','" + nama.getText() + "','" + bb.getText() + "','" + tinggi.getText() + "')";
+                    String riwayat = "insert into tb_riwayat(no_periksa, no_rm, tanggal_periksa, tindakan, diagnosa, resep, tekanan_darah, keluhan, nama_dokter, berat, tinggi, layanan) values ('" + jLabel11.getText() + "','" + lnNorm.getText() + "','" + tanggal.getText() + "','" + tindakan.getText() + "','" + diagnosa.getText() + "','" + resep.getText() + "','" + tensi.getText() + "','" + lbKel.getText() + "','" + nama.getText() + "','" + bb.getText() + "','" + tinggi.getText() + "','" + lbLay.getText() +"')";
                     st.executeUpdate(riwayat);
                     JOptionPane.showMessageDialog(null, "Pemeriksaan berhasil");
                     this.dispose();
@@ -514,7 +528,9 @@ public class form_rawat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel kel;
+    private javax.swing.JLabel lay1;
     private javax.swing.JLabel lbKel;
+    private javax.swing.JLabel lbLay;
     private javax.swing.JLabel lbNama;
     private javax.swing.JLabel lnNorm;
     private javax.swing.JLabel nama;

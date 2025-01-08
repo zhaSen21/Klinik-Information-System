@@ -120,9 +120,11 @@ public class form_periksa extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Keluhan = new javax.swing.JTextArea();
         btn_submit = new javax.swing.JButton();
+        iLayanan = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FORM KELUHAN");
@@ -185,6 +187,9 @@ public class form_periksa extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("Keluhan");
 
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel8.setText("Layanan");
+
         Keluhan.setColumns(20);
         Keluhan.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         Keluhan.setRows(5);
@@ -206,31 +211,34 @@ public class form_periksa extends javax.swing.JFrame {
             }
         });
 
+        iLayanan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Umum", "Imunisasi", "KB", "anc" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Nama)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(norm)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)))
+                        .addGap(8, 8, 8))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iLayanan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(Nama)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(norm))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -249,11 +257,15 @@ public class form_periksa extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(iLayanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btn_submit, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
+                .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -269,7 +281,8 @@ public class form_periksa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -282,7 +295,7 @@ public class form_periksa extends javax.swing.JFrame {
 
             // Validasi input
             if ("".equals(Keluhan.getText()) || jDateChooser1.getDate() == null) {
-                JOptionPane.showMessageDialog(rootPane, "Keluhan dan tanggal tidak boleh kosong", "Error", 1);
+                JOptionPane.showMessageDialog(rootPane, "Keluhan, tanggal dan layanan tidak boleh kosong", "Error", 1);
                 return;
             }
 
@@ -291,7 +304,7 @@ public class form_periksa extends javax.swing.JFrame {
             PreparedStatement ps = null;
 
             try {
-                String sql = "INSERT INTO tb_antrian (no_antrian, no_rm, nama, tanggal_periksa, keluhan) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO tb_antrian (no_antrian, no_rm, nama, tanggal_periksa, layanan, keluhan) VALUES (?, ?, ?, ?, ?, ?)";
                 ps = kon.prepareStatement(sql);
 
                 // Ambil nilai dari komponen GUI
@@ -299,6 +312,7 @@ public class form_periksa extends javax.swing.JFrame {
                 String noRm = norm.getText();
                 String namaPasien = Nama.getText();
                 String tanggalPeriksa = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
+                String layanan = (String) iLayanan.getSelectedItem();
                 String keluhan = Keluhan.getText();
 
                 // Set nilai untuk query
@@ -306,7 +320,8 @@ public class form_periksa extends javax.swing.JFrame {
                 ps.setString(2, noRm);
                 ps.setString(3, namaPasien);
                 ps.setString(4, tanggalPeriksa);
-                ps.setString(5, keluhan);
+                ps.setString(5, layanan);
+                ps.setString(6, keluhan);
 
                 ps.executeUpdate(); // Eksekusi query
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
@@ -379,6 +394,7 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JTextArea Keluhan;
     private javax.swing.JTextField Nama;
     private javax.swing.JButton btn_submit;
+    private javax.swing.JComboBox<String> iLayanan;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -387,6 +403,7 @@ public class form_periksa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

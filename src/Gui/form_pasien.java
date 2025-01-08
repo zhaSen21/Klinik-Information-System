@@ -108,7 +108,7 @@ public class form_pasien extends javax.swing.JFrame {
 
     public void selectRiwayat() {
         try {
-            Object header[] = {"NIK", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah", "Berat Badan(kg)", "Tinggi(cm)"};
+            Object header[] = {"NIK", "No. Periksa", "Tanggal", "Keluhan", "Tekanan Darah", "Berat Badan(kg)", "Tinggi(cm)", "Layanan"};
             DefaultTableModel data = new DefaultTableModel(null, header);
             tableRiwayat.setModel(data);
             Connection kon = KoneksiDatabase.getConnection();
@@ -124,7 +124,8 @@ public class form_pasien extends javax.swing.JFrame {
                     String kolom5 = rs.getString(7);
                     String kolom6 = rs.getString(10);
                     String kolom7 = rs.getString(11);
-                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6, kolom7};
+                    String kolom8 = rs.getString(12);
+                    String kolom[] = {kolom1, kolom2, kolom3, kolom4, kolom5, kolom6, kolom7, kolom8};
                     data.addRow(kolom);
                 }
             } catch (SQLException e) {
